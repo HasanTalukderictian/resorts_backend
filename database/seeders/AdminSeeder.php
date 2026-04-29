@@ -12,13 +12,17 @@ class AdminSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'superadmin@gmail.com',
-            'password' => Hash::make('password1234'), // পাসওয়ার্ডটি এনক্রিপ্ট করে দিবে
-            'email_verified_at' => now(),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'superadmin@gmail.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('password1234'),
+                'email_verified_at' => now(),
+                'role' => 'Admin',          // ✅ MUST
+                'status' => 'Active'        // ✅ OPTIONAL but recommended
+            ]
+        );
     }
 }
