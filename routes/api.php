@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FeaturesAboutController;
+use App\Http\Controllers\FeaturesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,11 +45,17 @@ Route::prefix('v1')->group(function () {
     Route::get('/banners/active', [BannerController::class, 'getActiveBanner']);
 
     // প্রটেক্টেড রাউট (Admin Panel এর জন্য - চাইলে এখানে auth:sanctum মিডলওয়্যার দিতে পারো)
-    Route::post('/banners', [BannerController::class, 'store']);
+    Route::post('/add-banners', [BannerController::class, 'store']);
 
-    Route::post('banners/{id}', [BannerController::class, 'update']);
+    Route::post('update-banners/{id}', [BannerController::class, 'update']);
     Route::delete('del-banners/{id}', [BannerController::class, 'destroy']);
     // ভবিষ্যতে আরও রাউট অ্যাড করতে পারো যেমন:
     // Route::get('/banners', [BannerController::class, 'index']);
     // Route::delete('/banners/{id}', [BannerController::class, 'destroy']);
 });
+
+
+Route::get('/get-features', [FeaturesController::class, 'index']);
+Route::post('/add-features', [FeaturesController::class, 'store']);
+Route::post('/save-about-features', [FeaturesAboutController::class, 'storeAboutFeatures']);
+Route::get('/get-about-features', [FeaturesAboutController::class, 'index']);
