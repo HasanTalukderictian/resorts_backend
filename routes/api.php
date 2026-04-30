@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeaturesAboutController;
 use App\Http\Controllers\FeaturesController;
@@ -59,3 +60,8 @@ Route::get('/get-features', [FeaturesController::class, 'index']);
 Route::post('/add-features', [FeaturesController::class, 'store']);
 Route::post('/save-about-features', [FeaturesAboutController::class, 'storeAboutFeatures']);
 Route::get('/get-about-features', [FeaturesAboutController::class, 'index']);
+
+
+Route::get('/get-welcomes', [WelcomeController::class, 'index']);
+Route::post('/add-welcomes', [WelcomeController::class, 'store']);
+Route::delete('/del-welcomes/{id}', [WelcomeController::class, 'destroy']);
