@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeaturesAboutController;
 use App\Http\Controllers\FeaturesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,3 +66,7 @@ Route::get('/get-about-features', [FeaturesAboutController::class, 'index']);
 Route::get('/get-welcomes', [WelcomeController::class, 'index']);
 Route::post('/add-welcomes', [WelcomeController::class, 'store']);
 Route::delete('/del-welcomes/{id}', [WelcomeController::class, 'destroy']);
+
+Route::get('/get-videos', [VideoController::class, 'index']);
+Route::post('/add-videos', [VideoController::class, 'store']);
+Route::delete('/del-videos/{id}', [VideoController::class, 'destroy']);
