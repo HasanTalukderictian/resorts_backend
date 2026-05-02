@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PropertyBenifit;
 use App\Models\PropertyOffer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,56 +24,89 @@ class PropertyOfferController extends Controller
         ], 200);
     }
 
+        public function getall()
+{
+    try {
+        $offers = PropertyOffer::latest()->paginate(10);
+        $benefits = PropertyBenifit::latest()->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Property offers and benefits fetched successfully',
+            'data' => [
+                'offers' => $offers,
+                'benefits' => $benefits
+            ]
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Failed to fetch data',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
     /**
      * 📥 STORE (CREATE)
      */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'brand_name' => 'required|string|max:255',
-            'whatsapp_number' => 'required|string|max:20',
-            'description' => 'nullable|string',
-            'features' => 'nullable|array',
-            'features.*' => 'string|max:255',
-            'slider_images' => 'nullable|array',
-            'slider_images.*' => 'image|mimes:jpg,jpeg,png,webp|max:5600'
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-            $imagePaths = [];
-
-            if ($request->hasFile('slider_images')) {
-                foreach ($request->file('slider_images') as $image) {
-                    $path = $image->store('property', 'public');
-                    $imagePaths[] = $path;
-                }
-            }
-
-            $data['slider_images'] = $imagePaths;
-
-            $offer = PropertyOffer::create($data);
-
-            DB::commit();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Property offer created successfully',
-                'data' => $offer
-            ], 201);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json([
-                'status' => false,
-                'message' => 'Something went wrong',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+   public function store(Request $request)
+{
+    // 1. Prothomei check korbo table-e kono data ache kina
+    if (PropertyOffer::exists()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Data already exists. You can only update the existing record or delete it first.'
+        ], 400);
     }
+
+    $data = $request->validate([
+        'title' => 'required|string|max:255',
+        'brand_name' => 'required|string|max:255',
+        'whatsapp_number' => 'required|string|max:20',
+        'description' => 'nullable|string',
+        'features' => 'nullable|array',
+        'features.*' => 'string|max:255',
+        'slider_images' => 'nullable|array',
+        'slider_images.*' => 'image|mimes:jpg,jpeg,png,webp|max:5600'
+    ]);
+
+    DB::beginTransaction();
+
+    try {
+        $imagePaths = [];
+
+        if ($request->hasFile('slider_images')) {
+            foreach ($request->file('slider_images') as $image) {
+                $path = $image->store('property', 'public');
+                $imagePaths[] = $path;
+            }
+        }
+
+        $data['slider_images'] = $imagePaths;
+
+        $offer = PropertyOffer::create($data);
+
+        DB::commit();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Property offer created successfully',
+            'data' => $offer
+        ], 201);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Something went wrong',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
 
     /**
      * 🔍 SINGLE SHOW

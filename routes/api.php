@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeaturesAboutController;
 use App\Http\Controllers\FeaturesController;
+use App\Http\Controllers\PropertyBenifitController;
 use App\Http\Controllers\PropertyOfferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
@@ -77,3 +78,11 @@ Route::post('/add-property-offers', [PropertyOfferController::class, 'store']);
 Route::post('/edit-property-offers/{id}', [PropertyOfferController::class, 'update']);
 Route::delete('/del-property-offers/{id}', [PropertyOfferController::class, 'destroy']);
 Route::get('/get-property-offers', [PropertyOfferController::class, 'index']);
+Route::get('/gets-property-offers', [PropertyOfferController::class, 'getall']);
+
+
+
+Route::post('/add-property-benifit', [PropertyBenifitController::class, 'store']);
+Route::post('/edit-property-benifit/{id}', [PropertyBenifitController::class, 'update']);
+Route::delete('/delete-property-benifit/{id}', [PropertyBenifitController::class, 'destroy']);
+Route::get('/get-property-benifit', [PropertyBenifitController::class, 'index']);
