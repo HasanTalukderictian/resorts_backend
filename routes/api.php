@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeaturesAboutController;
 use App\Http\Controllers\FeaturesController;
+use App\Http\Controllers\PropertyOfferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
@@ -70,3 +71,9 @@ Route::delete('/del-welcomes/{id}', [WelcomeController::class, 'destroy']);
 Route::get('/get-videos', [VideoController::class, 'index']);
 Route::post('/add-videos', [VideoController::class, 'store']);
 Route::delete('/del-videos/{id}', [VideoController::class, 'destroy']);
+
+
+Route::post('/add-property-offers', [PropertyOfferController::class, 'store']);
+Route::post('/edit-property-offers/{id}', [PropertyOfferController::class, 'update']);
+Route::delete('/del-property-offers/{id}', [PropertyOfferController::class, 'destroy']);
+Route::get('/get-property-offers', [PropertyOfferController::class, 'index']);
