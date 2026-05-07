@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
 use App\Http\Controllers\Api\WelcomeController;
@@ -94,3 +95,10 @@ Route::post('/add-investment', [InvestmentController::class, 'store']);
 Route::post('/edit-investment/{id}', [InvestmentController::class, 'update']);
 Route::delete('/del-investment/{id}', [InvestmentController::class, 'destroy']);
 Route::get('/get-investment', [InvestmentController::class, 'index']);
+
+
+
+Route::post('/investment-benefits', [InvestmentBenefitController::class, 'store']);
+Route::get('/get-investment-benefits', [InvestmentBenefitController::class, 'index']);
+Route::post('/edit-investment-benefits/{id}', [InvestmentBenefitController::class, 'update']);
+Route::get('/del-investment-benefits/{id}', [InvestmentBenefitController::class, 'destroy']);
