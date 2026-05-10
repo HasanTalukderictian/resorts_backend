@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
@@ -95,6 +96,23 @@ Route::post('/add-investment', [InvestmentController::class, 'store']);
 Route::post('/edit-investment/{id}', [InvestmentController::class, 'update']);
 Route::delete('/del-investment/{id}', [InvestmentController::class, 'destroy']);
 Route::get('/get-investment', [InvestmentController::class, 'index']);
+
+
+Route::prefix('events')->group(function () {
+    // Public routes
+    Route::get('/', [EventController::class, 'index']);
+    Route::get('/all', [EventController::class, 'getAllEvents']);
+    Route::get('/{identifier}', [EventController::class, 'show']);
+
+    // Protected routes (require authentication)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/', [EventController::class, 'store']);
+        Route::put('/{id}', [EventController::class, 'update']);
+        Route::delete('/{id}', [EventController::class, 'destroy']);
+        Route::post('/{id}/restore', [EventController::class, 'restore']);
+        Route::patch('/{id}/status', [EventController::class, 'updateStatus']);
+    });
+});
 
 
 
