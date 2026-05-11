@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
+use App\Http\Controllers\Api\LuxuryItemController;
 use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeaturesAboutController;
@@ -112,6 +113,22 @@ Route::prefix('events')->group(function () {
         Route::post('/{id}/restore', [EventController::class, 'restore']);
         Route::patch('/{id}/status', [EventController::class, 'updateStatus']);
     });
+});
+
+
+Route::prefix('luxury-items')->group(function () {
+
+    Route::get('/', [LuxuryItemController::class, 'index']);
+
+    Route::post('/', [LuxuryItemController::class, 'store']);
+
+    Route::get('/{id}', [LuxuryItemController::class, 'show']);
+
+    Route::put('/{id}', [LuxuryItemController::class, 'update']);
+
+    Route::delete('/{id}', [LuxuryItemController::class, 'destroy']);
+
+    Route::patch('/status/{id}', [LuxuryItemController::class, 'changeStatus']);
 });
 
 
