@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
 use App\Http\Controllers\Api\LuxuryItemController;
+use App\Http\Controllers\Api\TestominalController;
 use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeaturesAboutController;
@@ -131,6 +132,10 @@ Route::prefix('luxury-items')->group(function () {
     Route::patch('/status/{id}', [LuxuryItemController::class, 'changeStatus']);
 });
 
+
+Route::get('/get-testimonials', [TestominalController::class, 'index']);
+Route::post('/add-testimonial', [TestominalController::class, 'store']);
+Route::delete('/del-testimonial/{id}', [TestominalController::class, 'destroy']);
 
 
 Route::post('/investment-benefits', [InvestmentBenefitController::class, 'store']);
