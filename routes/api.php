@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
@@ -142,3 +143,8 @@ Route::post('/investment-benefits', [InvestmentBenefitController::class, 'store'
 Route::get('/get-investment-benefits', [InvestmentBenefitController::class, 'index']);
 Route::post('/edit-investment-benefits/{id}', [InvestmentBenefitController::class, 'update']);
 Route::get('/del-investment-benefits/{id}', [InvestmentBenefitController::class, 'destroy']);
+
+Route::get('/gallery', [GalleryController::class, 'index']);
+Route::post('/gallery', [GalleryController::class, 'store']);
+Route::post('/gallery/{id}', [GalleryController::class, 'update']); // Update-er jonno POST use kora hoy file upload thakle
+Route::delete('/gallery/{id}', [GalleryController::class, 'destroy']);
