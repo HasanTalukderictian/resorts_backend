@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
@@ -148,3 +149,12 @@ Route::get('/gallery', [GalleryController::class, 'index']);
 Route::post('/gallery', [GalleryController::class, 'store']);
 Route::post('/gallery/{id}', [GalleryController::class, 'update']); // Update-er jonno POST use kora hoy file upload thakle
 Route::delete('/gallery/{id}', [GalleryController::class, 'destroy']);
+
+
+Route::get('/blogs', [BlogController::class, 'index']);
+
+Route::post('/blogs', [BlogController::class, 'store']);
+
+Route::post('/blogs/{id}', [BlogController::class, 'update']);
+Route::delete('/blogs/{id}', [BlogController::class, 'destroy']);
+Route::get('/blogs/{id}', [BlogController::class, 'show']);
