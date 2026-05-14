@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
 use App\Http\Controllers\Api\LuxuryItemController;
+use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\TestominalController;
 use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
@@ -158,3 +159,14 @@ Route::post('/blogs', [BlogController::class, 'store']);
 Route::post('/blogs/{id}', [BlogController::class, 'update']);
 Route::delete('/blogs/{id}', [BlogController::class, 'destroy']);
 Route::get('/blogs/{id}', [BlogController::class, 'show']);
+
+
+Route::prefix('notices')->group(function () {
+    Route::get('/', [NoticeController::class, 'index']); // Get all notices
+    Route::post('/', [NoticeController::class, 'store']); // Create new notice
+    Route::get('/active', [NoticeController::class, 'getActiveNotices']); // Get active notices
+    Route::get('/{id}', [NoticeController::class, 'show']); // Get single notice
+    Route::post('/{id}', [NoticeController::class, 'update']); // Update notice
+    Route::delete('/{id}', [NoticeController::class, 'destroy']); // Delete notice
+
+});
