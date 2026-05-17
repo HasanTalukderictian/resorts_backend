@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
 use App\Http\Controllers\Api\LuxuryItemController;
 use App\Http\Controllers\Api\NoticeController;
+use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\TestominalController;
 use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
@@ -170,3 +171,14 @@ Route::prefix('notices')->group(function () {
     Route::delete('/{id}', [NoticeController::class, 'destroy']); // Delete notice
 
 });
+
+
+Route::get('/packages', [PackageController::class, 'index']);
+
+Route::post('/packages', [PackageController::class, 'store']);
+
+Route::put('/packages/{id}', [PackageController::class, 'update']);
+
+Route::delete('/packages/{id}', [PackageController::class, 'destroy']);
+
+Route::get('/packages/{id}/history', [PackageController::class, 'priceHistory']);
