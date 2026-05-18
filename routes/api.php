@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AffiliateController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\EventController;
@@ -182,3 +183,15 @@ Route::put('/packages/{id}', [PackageController::class, 'update']);
 Route::delete('/packages/{id}', [PackageController::class, 'destroy']);
 
 Route::get('/packages/{id}/history', [PackageController::class, 'priceHistory']);
+
+
+Route::prefix('affiliates')->group(function () {
+    Route::get('/', [AffiliateController::class, 'index'])->name('affiliates.index');
+    Route::post('/', [AffiliateController::class, 'store'])->name('affiliates.store');
+    Route::get('/{id}', [AffiliateController::class, 'show'])->name('affiliates.show');
+    Route::put('/{id}', [AffiliateController::class, 'update'])->name('affiliates.update');
+    Route::delete('/{id}', [AffiliateController::class, 'destroy'])->name('affiliates.destroy');
+    Route::patch('/{id}/status', [AffiliateController::class, 'updateStatus'])->name('affiliates.status');
+    Route::post('/{id}/click', [AffiliateController::class, 'trackClick'])->name('affiliates.click');
+    Route::post('/bulk-delete', [AffiliateController::class, 'bulkDelete'])->name('affiliates.bulk-delete');
+});
