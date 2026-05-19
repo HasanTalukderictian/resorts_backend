@@ -195,3 +195,17 @@ Route::prefix('affiliates')->group(function () {
     Route::post('/{id}/click', [AffiliateController::class, 'trackClick'])->name('affiliates.click');
     Route::post('/bulk-delete', [AffiliateController::class, 'bulkDelete'])->name('affiliates.bulk-delete');
 });
+
+
+
+use App\Http\Controllers\Api\TeamMemberController;
+
+Route::get('/team-members', [TeamMemberController::class, 'index']);
+
+Route::post('/add-team-member', [TeamMemberController::class, 'store']);
+
+Route::post('/edit-team-member/{id}', [TeamMemberController::class, 'update']);
+
+Route::delete('/delete-team-member/{id}', [TeamMemberController::class, 'destroy']);
+
+Route::get('/team-member/{id}', [TeamMemberController::class, 'show']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\InvestmentBenefit;
+use App\Models\InvestmentPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,7 @@ class InvestmentBenefitController extends Controller
     {
         try {
             // লেটেস্ট ডেটা আগে দেখানোর জন্য (Pagination সহ)
-            $benefits = InvestmentBenefit::latest()->paginate(10);
+            $benefits = InvestmentPackage::latest()->paginate(10);
 
             return response()->json([
                 'status' => true,

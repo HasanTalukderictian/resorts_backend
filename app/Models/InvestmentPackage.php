@@ -9,9 +9,24 @@ class InvestmentPackage extends Model
 {
     use HasFactory;
 
-    protected $table ='investment_packages';
+    protected $table = 'investment_packages';
+
     protected $fillable = [
-        'title', 'price', 'discount', 'land', 'building',
-        'total_size', 'description', 'is_popular', 'is_sold_out'
+        'title',
+        'price',
+        'discount',
+        'land',
+        'building',
+        'total_size',
+        'description',
+        'images',
+        'is_popular',
+        'is_sold_out'
+    ];
+
+    protected $casts = [
+        'images' => 'array',
+        'is_popular' => 'boolean',
+        'is_sold_out' => 'boolean',
     ];
 }
