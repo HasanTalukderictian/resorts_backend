@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\InvestmentPackageController;
 use App\Http\Controllers\Api\LuxuryItemController;
 use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\PackageController;
+use App\Http\Controllers\Api\PartnerController;
+use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\TestominalController;
 use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
@@ -22,6 +24,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +57,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
 });
+
+
 
 Route::prefix('v1')->group(function () {
 
@@ -197,8 +203,18 @@ Route::prefix('affiliates')->group(function () {
 });
 
 
+Route::get('/partners', [PartnerController::class, 'index']);
+Route::get('/partners/active', [PartnerController::class, 'activePartners']);
+Route::get('/partners/{id}', [PartnerController::class, 'show']);
 
-use App\Http\Controllers\Api\TeamMemberController;
+Route::post('/partners', [PartnerController::class, 'store']);
+Route::post('/partners/{id}', [PartnerController::class, 'update']);
+
+Route::delete('/partners/{id}', [PartnerController::class, 'destroy']);
+
+Route::post('/partners/{id}/click', [PartnerController::class, 'incrementClick']);
+
+
 
 Route::get('/team-members', [TeamMemberController::class, 'index']);
 

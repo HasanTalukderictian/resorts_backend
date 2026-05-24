@@ -39,83 +39,77 @@ class InvestmentController extends Controller
     /**
      * Store Package
      */
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
+   public function store(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'title' => 'required|string|max:255|unique:investment_packages,title',
+        'price' => 'nullable|string',
+        'discount' => 'nullable|string',
+        'land' => 'nullable|string',
+        'building' => 'nullable|string',
+        'total_size' => 'nullable|string',
+        'description' => 'nullable|string',
 
-            'title' => 'required|string|max:255|unique:investment_packages,title',
-            'price' => 'nullable|string',
-            'discount' => 'nullable|string',
-            'land' => 'nullable|string',
-            'building' => 'nullable|string',
-            'total_size' => 'nullable|string',
-            'description' => 'nullable|string',
+        'images' => 'nullable|array',
+        'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
 
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
+        'is_popular' => 'boolean',
+        'is_sold_out' => 'boolean',
+    ]);
 
-            'is_popular' => 'boolean',
-            'is_sold_out' => 'boolean',
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    DB::beginTransaction();
+
+    try {
+
+        $imagePaths = [];
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+
+                $path = $image->store('investment_packages', 'public');
+
+                // ✅ শুধু path save হবে
+                $imagePaths[] = $path;
+            }
+        }
+
+        $package = InvestmentPackage::create([
+            'title' => $request->title,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'land' => $request->land,
+            'building' => $request->building,
+            'total_size' => $request->total_size,
+            'description' => $request->description,
+            'images' => $imagePaths,
+            'is_popular' => $request->is_popular ?? false,
+            'is_sold_out' => $request->is_sold_out ?? false,
         ]);
 
-        if ($validator->fails()) {
+        DB::commit();
 
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        return response()->json([
+            'status' => true,
+            'message' => 'Package created successfully',
+            'data' => $package
+        ], 201);
 
-        DB::beginTransaction();
+    } catch (\Exception $e) {
+        DB::rollBack();
 
-        try {
-
-            $imagePaths = [];
-
-            // Multiple Image Upload
-            if ($request->hasFile('images')) {
-
-                foreach ($request->file('images') as $image) {
-
-                    $path = $image->store('investment_packages', 'public');
-
-                    $imagePaths[] = asset('storage/' . $path);
-                }
-            }
-
-            $package = InvestmentPackage::create([
-                'title' => $request->title,
-                'price' => $request->price,
-                'discount' => $request->discount,
-                'land' => $request->land,
-                'building' => $request->building,
-                'total_size' => $request->total_size,
-                'description' => $request->description,
-                'images' => $imagePaths,
-                'is_popular' => $request->is_popular ?? false,
-                'is_sold_out' => $request->is_sold_out ?? false,
-            ]);
-
-            DB::commit();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Package created successfully',
-                'data' => $package
-            ], 201);
-
-        } catch (\Exception $e) {
-
-            DB::rollBack();
-
-            Log::error("Error creating package: " . $e->getMessage());
-
-            return response()->json([
-                'status' => false,
-                'message' => 'Failed to create package'
-            ], 500);
-        }
+        return response()->json([
+            'status' => false,
+            'message' => 'Failed to create package'
+        ], 500);
     }
+}
 
     /**
      * Show Single Package
