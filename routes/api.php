@@ -20,6 +20,7 @@ use App\Http\Controllers\FeaturesAboutController;
 use App\Http\Controllers\FeaturesController;
 use App\Http\Controllers\PropertyBenifitController;
 use App\Http\Controllers\PropertyOfferController;
+use App\Http\Controllers\QueryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
@@ -213,6 +214,13 @@ Route::post('/partners/{id}', [PartnerController::class, 'update']);
 Route::delete('/partners/{id}', [PartnerController::class, 'destroy']);
 
 Route::post('/partners/{id}/click', [PartnerController::class, 'incrementClick']);
+
+
+
+Route::get('/queries', [QueryController::class, 'index']);
+Route::post('/addqueries', [QueryController::class, 'store']);
+Route::get('/queries/{id}', [QueryController::class, 'show']);
+Route::delete('/queries/{id}', [QueryController::class, 'destroy']);
 
 
 
