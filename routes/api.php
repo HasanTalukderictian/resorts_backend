@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AchievementController;
 use App\Http\Controllers\Api\AffiliateController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BlogController;
@@ -154,6 +155,13 @@ Route::post('/investment-benefits', [InvestmentBenefitController::class, 'store'
 Route::get('/get-investment-benefits', [InvestmentBenefitController::class, 'index']);
 Route::post('/edit-investment-benefits/{id}', [InvestmentBenefitController::class, 'update']);
 Route::get('/del-investment-benefits/{id}', [InvestmentBenefitController::class, 'destroy']);
+
+
+Route::get('/get-achievement', [AchievementController::class, 'index']);     // GET: সব achievement দেখাবে
+Route::post('/add-achievement', [AchievementController::class, 'store']);    // POST: নতুন achievement যোগ করবে
+Route::post('/edit-achievement/{id}', [AchievementController::class, 'update']); // POST: achievement আপডেট করবে
+Route::delete('/del-achievement/{id}', [AchievementController::class, 'destroy']); // DELETE: achievement ডিলিট করবে
+
 
 Route::get('/gallery', [GalleryController::class, 'index']);
 Route::post('/gallery', [GalleryController::class, 'store']);
