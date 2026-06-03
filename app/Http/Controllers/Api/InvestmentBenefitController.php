@@ -17,7 +17,7 @@ class InvestmentBenefitController extends Controller
     {
         try {
             // লেটেস্ট ডেটা আগে দেখানোর জন্য (Pagination সহ)
-            $benefits = InvestmentPackage::latest()->paginate(10);
+            $benefits = InvestmentBenefit::latest()->paginate(10);
 
             return response()->json([
                 'status' => true,
