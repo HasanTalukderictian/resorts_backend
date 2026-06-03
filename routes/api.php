@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\LuxuryItemController;
 use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\PackageController;
 use App\Http\Controllers\Api\PartnerController;
+use App\Http\Controllers\Api\RecordController;
 use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\TestominalController;
 use App\Http\Controllers\Api\WelcomeController;
@@ -170,6 +171,19 @@ Route::post('/add-investrecord', [InvestReordController::class, 'store']);    //
 Route::post('/edit-investrecord/{id}', [InvestReordController::class, 'update']); // POST update record
 Route::delete('/del-investrecord/{id}', [InvestReordController::class, 'destroy']); // DELETE record
 
+
+Route::get('/get-record', [InvestReordController::class, 'index']);     // GET all records
+Route::post('/add-record', [InvestReordController::class, 'store']);    // POST add record
+Route::post('/edit-record/{id}', [InvestReordController::class, 'update']); // POST update record
+Route::delete('/del-record/{id}', [InvestReordController::class, 'destroy']); // DELETE record
+
+
+Route::get('/get-valuerecord', [RecordController::class, 'index']);     // GET all records
+Route::post('/add-valuerecord', [RecordController::class, 'store']);    // POST add record
+Route::post('/edit-valuerecord/{id}', [RecordController::class, 'update']); // POST update record
+Route::delete('/del-valuerecord/{id}', [RecordController::class, 'destroy']); // DELETE record
+
+Route::get('/combined-records', [RecordController::class, 'combinedData']);
 
 Route::get('/gallery', [GalleryController::class, 'index']);
 Route::post('/gallery', [GalleryController::class, 'store']);
