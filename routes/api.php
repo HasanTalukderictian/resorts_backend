@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
 use App\Http\Controllers\Api\InvestmentPackageController;
+use App\Http\Controllers\Api\InvestReordController;
 use App\Http\Controllers\Api\LuxuryItemController;
 use App\Http\Controllers\Api\NoticeController;
 use App\Http\Controllers\Api\PackageController;
@@ -161,6 +162,13 @@ Route::get('/get-achievement', [AchievementController::class, 'index']);     // 
 Route::post('/add-achievement', [AchievementController::class, 'store']);    // POST: নতুন achievement যোগ করবে
 Route::post('/edit-achievement/{id}', [AchievementController::class, 'update']); // POST: achievement আপডেট করবে
 Route::delete('/del-achievement/{id}', [AchievementController::class, 'destroy']); // DELETE: achievement ডিলিট করবে
+
+
+// In routes/api.php
+Route::get('/get-investrecord', [InvestReordController::class, 'index']);     // GET all records
+Route::post('/add-investrecord', [InvestReordController::class, 'store']);    // POST add record
+Route::post('/edit-investrecord/{id}', [InvestReordController::class, 'update']); // POST update record
+Route::delete('/del-investrecord/{id}', [InvestReordController::class, 'destroy']); // DELETE record
 
 
 Route::get('/gallery', [GalleryController::class, 'index']);
