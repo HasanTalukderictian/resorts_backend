@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
 use App\Http\Controllers\Api\InvestmentController;
-use App\Http\Controllers\Api\InvestmentPackageController;
 use App\Http\Controllers\Api\InvestReordController;
 use App\Http\Controllers\Api\LuxuryItemController;
 use App\Http\Controllers\Api\NoticeController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\TestominalController;
 use App\Http\Controllers\Api\WelcomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\ClubImageController;
 use App\Http\Controllers\FeaturesAboutController;
 use App\Http\Controllers\FeaturesController;
 use App\Http\Controllers\PropertyBenifitController;
@@ -155,6 +155,12 @@ Route::post('/club-infos', [ClubinfoController::class, 'store']);
 Route::get('/club-infos/{id}', [ClubinfoController::class, 'show']);
 Route::post('/edit-club-infos/{id}', [ClubinfoController::class, 'update']); // multipart/form-data
 Route::delete('/del-club-infos/{id}', [ClubinfoController::class, 'destroy']);
+
+Route::get('/club-gallery', [ClubImageController::class, 'index']);
+Route::post('/add-club-gallery', [ClubImageController::class, 'store']);
+Route::get('/club-gallery/{id}', [ClubImageController::class, 'show']);
+Route::post('/edit-club-gallery/{id}', [ClubImageController::class, 'update']); // multipart/form-data
+Route::delete('/del-club-gallery/{id}', [ClubImageController::class, 'destroy']);
 
 Route::get('/get-testimonials', [TestominalController::class, 'index']);
 Route::post('/add-testimonial', [TestominalController::class, 'store']);
