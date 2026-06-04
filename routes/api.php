@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AchievementController;
 use App\Http\Controllers\Api\AffiliateController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\ClubinfoController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\InvestmentBenefitController;
@@ -147,6 +148,13 @@ Route::prefix('luxury-items')->group(function () {
     Route::patch('/status/{id}', [LuxuryItemController::class, 'changeStatus']);
 });
 
+
+
+Route::get('/club-infos', [ClubinfoController::class, 'index']);
+Route::post('/club-infos', [ClubinfoController::class, 'store']);
+Route::get('/club-infos/{id}', [ClubinfoController::class, 'show']);
+Route::post('/edit-club-infos/{id}', [ClubinfoController::class, 'update']); // multipart/form-data
+Route::delete('/del-club-infos/{id}', [ClubinfoController::class, 'destroy']);
 
 Route::get('/get-testimonials', [TestominalController::class, 'index']);
 Route::post('/add-testimonial', [TestominalController::class, 'store']);
