@@ -41,15 +41,17 @@ class ClubImageController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            // ✅ FIX: proper validation (NO validated() bug)
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
-                'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120', // Increased to 5MB
             ]);
 
             // Upload image
             if ($request->hasFile('image')) {
-                $validated['image'] = $request->file('image')->store('galleries', 'public');
+                $file = $request->file('image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('galleries', $filename, 'public');
+                $validated['image'] = $path;
             }
 
             $gallery = ClubGallery::create($validated);
@@ -71,27 +73,6 @@ class ClubImageController extends Controller
     }
 
     /**
-     * Show single gallery item
-     */
-    public function show($id): JsonResponse
-    {
-        try {
-            $gallery = ClubGallery::findOrFail($id);
-
-            return response()->json([
-                'success' => true,
-                'data' => $gallery
-            ], 200);
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gallery item not found'
-            ], 404);
-        }
-    }
-
-    /**
      * Update gallery item
      */
     public function update(Request $request, $id): JsonResponse
@@ -101,7 +82,7 @@ class ClubImageController extends Controller
 
             $validated = $request->validate([
                 'title' => 'sometimes|required|string|max:255',
-                'image' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'image' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             ]);
 
             // update title if exists
@@ -111,14 +92,16 @@ class ClubImageController extends Controller
 
             // update image if exists
             if ($request->hasFile('image')) {
-
                 // delete old image
                 if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
                     Storage::disk('public')->delete($gallery->image);
                 }
 
                 // upload new image
-                $gallery->image = $request->file('image')->store('galleries', 'public');
+                $file = $request->file('image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('galleries', $filename, 'public');
+                $gallery->image = $path;
             }
 
             $gallery->save();
